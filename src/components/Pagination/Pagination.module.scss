@@ -1,0 +1,40 @@
+.root {
+  margin-top: 20px;
+}
+
+.ul {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  :global(.active) {
+    background-color: #fe5f1e;
+    color: #fff;
+  }
+}
+
+.li {
+  text-align: center;
+  height: 45px;
+  width: 45px;
+  margin-right: 8px;
+  border: 1px solid #fe5f1e;
+  color: #fe5f1e;
+  padding: 12px 12px;
+  border-radius: 25px;
+  cursor: pointer;
+  &:hover {
+    background-color: #fe5f1e;
+    color: #fff;
+  }
+  &:active {
+    background-color: #e9581f;
+  }
+}
+
+.back,
+.forward
+ {
+  font-size: 20px;
+  line-height: 20px;
+}
+
