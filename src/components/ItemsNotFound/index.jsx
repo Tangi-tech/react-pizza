@@ -1,13 +1,15 @@
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { setCurrentPage } from '../../redux/slices/filterSlice'
 
 import styles from './ItemsNotFound.module.scss'
 
-const ItemsNotFound = ( {onHomePageClick, setActiveType, setCurrentPage} ) => {
+const ItemsNotFound = ({ onHomePageClick }) => {
+  const dispatch = useDispatch()
 
   const onClickShowAll = () => {
     onHomePageClick()
-    setActiveType(-1)
-    setCurrentPage(1)
+    dispatch(setCurrentPage(1))
   }
 
   return (

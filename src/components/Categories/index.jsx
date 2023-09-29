@@ -1,23 +1,31 @@
 
-const Categories = ( {activeType, setActiveType, setCurrentPage} ) => {
-  const categories = [
-    {title: 'Все',
-    index: -1},
-    {title: 'Мясные',
-    index: 0},
-    {title: 'Вегетарианские',
-    index: 1},
-    {title: 'Гриль',
-    index: 2},
-    {title: 'Острые',
-    index: 3},
-    {title: 'Закрытые',
-    index: 4}
-  ]
+import { useSelector, useDispatch } from 'react-redux'
 
-  const onClickCategory = (index) => {
-    setActiveType(index)
-    setCurrentPage(1)
+import { setCategory, setCurrentPage } from '../../redux/slices/filterSlice'
+
+export const categories = [
+  {title: 'Все',
+  index: -1},
+  {title: 'Мясные',
+  index: 0},
+  {title: 'Вегетарианские',
+  index: 1},
+  {title: 'Гриль',
+  index: 2},
+  {title: 'Острые',
+  index: 3},
+  {title: 'Закрытые',
+  index: 4}
+]
+
+const Categories = () => {
+  const currentCategory = useSelector(state => state.filter.currentCategory.index)
+  const dispatch = useDispatch()
+
+
+  const onClickCategory = (category) => {
+    dispatch(setCategory(category))
+    dispatch(setCurrentPage(1))
   }
 
   return (
@@ -26,8 +34,8 @@ const Categories = ( {activeType, setActiveType, setCurrentPage} ) => {
         {
           categories.map((category) => (
             <li key={category.index} 
-            className={ activeType === category.index ? "active" : ''} 
-            onClick={() => onClickCategory(category.index)}>{category.title}</li>
+            className={ currentCategory === category.index ? "active" : ''} 
+            onClick={() => onClickCategory(category)}>{category.title}</li>
           ))
         }
       </ul>

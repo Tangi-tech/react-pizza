@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
 
 import Search from '../../components/Search'
+import { SearchContext } from '../../App'
 
 import logoSvg from '../../assets/img/pizza-logo.svg'
 
-const Header = ( {inputValue, setInputValue, onHomePageClick} ) => {
-  
+const Header = () => {
+  const { onHomePageClick } = useContext(SearchContext)
+
   return (
     <div className="header">
     <div className="container">
@@ -18,7 +21,7 @@ const Header = ( {inputValue, setInputValue, onHomePageClick} ) => {
           </div>
         </div>
       </Link>
-      <Search inputValue={inputValue} setInputValue={setInputValue}/>
+      <Search />
       <Link to="/cart">
         <div className="header__cart">
           <a href="/cart.html" className="button button--cart">

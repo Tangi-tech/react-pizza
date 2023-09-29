@@ -1,27 +1,33 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setSort, setOrder } from '../../redux/slices/filterSlice'
 
-const Sort = ( {currentSort, setCurrentSort, setSortOrder, sortOrder} ) => {
+export const sortMethods = [
+  {title: 'популярности',
+  sort: 'rating'},
+  {title: 'цене',
+  sort: 'price'},
+  {title: 'алфавиту',
+  sort: 'title'}
+]
+
+const Sort = () => {
+  const currentSort = useSelector(state => state.filter.currentSort)
+  const sortOrder = useSelector(state => state.filter.sortOrder)
+  const dispatch = useDispatch()
 
   const [isVisiblePopup, setIsVisiblePopup] = useState(false)
 
-  const sortMethods = [
-    {title: 'популярности',
-    sort: 'rating'},
-    {title: 'цене',
-    sort: 'price'},
-    {title: 'алфавиту',
-    sort: 'title'}
-  ]
 
   const onClickSort = (method) => {
-    setCurrentSort(method)
+    dispatch(setSort(method))
     setIsVisiblePopup(false)
   }
 
   return (
     <div className="sort">
       <div className="sort__label">
-        <div onClick={setSortOrder}>
+        <div onClick={() => dispatch(setOrder())}>
           <svg
             width="10"
             height="6"
