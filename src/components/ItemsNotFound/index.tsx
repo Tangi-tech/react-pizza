@@ -1,15 +1,15 @@
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { setCurrentPage } from '../../redux/slices/filterSlice'
+import { setHomePage } from '../../redux/filter/slice'
 
 import styles from './ItemsNotFound.module.scss'
 
-const ItemsNotFound = ({ onHomePageClick }) => {
+export const ItemsNotFound: React.FC = () => {
   const dispatch = useDispatch()
 
   const onClickShowAll = () => {
-    onHomePageClick()
-    dispatch(setCurrentPage(1))
+    dispatch(setHomePage())
   }
 
   return (
@@ -22,5 +22,3 @@ const ItemsNotFound = ({ onHomePageClick }) => {
     </div>
   )
 }
-
-export default ItemsNotFound

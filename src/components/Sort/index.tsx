@@ -1,31 +1,56 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, MouseEvent, FC, memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setSort, setOrder } from '../../redux/slices/filterSlice'
+import { setSort, setOrder } from '../../redux/filter/slice'
 
-export const sortMethods = [
+type sortMethodsType = {
+  title: string;
+  sort: 'rating' | 'entryPrice' | 'title';
+}
+
+export const sortMethods: sortMethodsType[] = [
   {title: 'популярности',
   sort: 'rating'},
   {title: 'цене',
-  sort: 'price'},
+  sort: 'entryPrice'},
   {title: 'алфавиту',
   sort: 'title'}
 ]
 
-const Sort = () => {
-  const currentSort = useSelector(state => state.filter.currentSort)
-  const sortOrder = useSelector(state => state.filter.sortOrder)
+export const Sort: FC = memo(() => {
+  const popupRef = useRef<HTMLDivElement>(null)
+
+  const currentSort = useSelector((state: any) => state.filter.currentSort)
+  const sortOrder = useSelector((state: any) => state.filter.sortOrder)
   const dispatch = useDispatch()
 
   const [isVisiblePopup, setIsVisiblePopup] = useState(false)
 
+  useEffect(() => {
+    const eventHandler = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        path: Node[];
+        composedPath: Function;
+      }
+      
+      let path = _event.composedPath ? _event.composedPath() : _event.path;
+      if (!path.includes(popupRef.current)) {
+        setIsVisiblePopup(false)
+      }
+    }
+    // @ts-ignore
+    document.body.addEventListener('click', eventHandler)
+    // @ts-ignore
+    return () => document.body.removeEventListener('click', eventHandler)
+  }, [])
 
-  const onClickSort = (method) => {
+
+  const onClickSort = (method: sortMethodsType) => {
     dispatch(setSort(method))
     setIsVisiblePopup(false)
   }
 
   return (
-    <div className="sort">
+    <div className="sort" ref={popupRef}>
       <div className="sort__label">
         <div onClick={() => dispatch(setOrder())}>
           <svg
@@ -65,6 +90,4 @@ const Sort = () => {
       }
   </div>
   )
-}
-
-export default Sort
+})

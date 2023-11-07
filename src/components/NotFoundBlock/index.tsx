@@ -1,8 +1,9 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import styles from './NotFoundBlock.module.scss'
 
-const NotFoundBlock = () => {
+export const NotFoundBlock: React.FC = () => {
 
   return (
     <div className={styles.root}>
@@ -14,5 +15,3 @@ const NotFoundBlock = () => {
     </div>
   )
 }
-
-export default NotFoundBlock

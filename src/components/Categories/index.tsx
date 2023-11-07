@@ -1,7 +1,15 @@
 
 import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
 
-import { setCategory, setCurrentPage } from '../../redux/slices/filterSlice'
+// import { useWhyDidYouUpdate } from 'ahooks';
+
+import { setCategory, setCurrentPage } from '../../redux/filter/slice'
+
+type CategoryType = {
+  title: string;
+  index: number;
+}
 
 export const categories = [
   {title: 'Все',
@@ -18,12 +26,11 @@ export const categories = [
   index: 4}
 ]
 
-const Categories = () => {
-  const currentCategory = useSelector(state => state.filter.currentCategory.index)
+export const Categories: React.FC = React.memo(() => {
+  const currentCategory = useSelector((state: any) => state.filter.currentCategory.index)
   const dispatch = useDispatch()
-
-
-  const onClickCategory = (category) => {
+  // useWhyDidYouUpdate('CategoriesComponent', {currentCategory})
+  const onClickCategory = (category: CategoryType) => {
     dispatch(setCategory(category))
     dispatch(setCurrentPage(1))
   }
@@ -41,6 +48,4 @@ const Categories = () => {
       </ul>
     </div>
   )
-}
-
-export default Categories
+})
